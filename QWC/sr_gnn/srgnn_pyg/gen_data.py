@@ -48,12 +48,15 @@ def gen_data(dir_name, predict=False, drop_dup=True):
     return (X_all, y_all)
 
 if __name__ == '__main__':
-    train_dir = "../../../data/underexpose_train/"
-    test_dir = "../../../data/underexpose_test/"
+    base_dir = '../../data/'
+    train_dir = base_dir+"underexpose_train/"
+    test_dir = base_dir+"underexpose_test/"
     dest_dir = "datasets/debias/raw/"
     delete_dir = "datasets/debias/processed/"
     if os.path.exists(delete_dir):
         os.system("rm -rf "+delete_dir)
+    if not os.path.exists(dest_dir):
+        os.system("mkdir -p "+dest_dir)
 
     train_data = gen_data(train_dir)
     test_data = gen_data(test_dir)
