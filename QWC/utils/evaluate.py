@@ -51,7 +51,8 @@ def evaluate_each_phase(predictions, answers):
 
 def evaluate(submit_fname, answer_fname, current_phase):
     try:
-        answers = [{} for _ in range(10)]
+        # @@@有很多用户是不会出现的
+        answers = [{} for _ in range(11)]
         with open(answer_fname, 'r') as fin:
             for line in fin:
                 line = [int(x) for x in line.split(',')]
@@ -81,7 +82,7 @@ def evaluate(submit_fname, answer_fname, current_phase):
                     print('each row need have 50 items')
                     return
                 if len(set(item_ids)) != 50:
-                    print(stdout, 'each row need have 50 DISTINCT items')
+                    print( 'each row need have 50 DISTINCT items')
                     return
                 predictions[user_id]=item_ids
     except Exception as _:
@@ -98,9 +99,10 @@ def evaluate(submit_fname, answer_fname, current_phase):
     for phase_id in range(phase_beg, phase_end):
         for user_id in answers[phase_id]:
             if user_id not in predictions:
-                print(stdout, 'user_id %d of phase %d not in submission' %
+                print('user_id %d of phase %d not in submission' %
                       (user_id, phase_id))
-                return
+                continue
+                #return
         try:
             # We sum the scores from all the phases, instead of averaging them.
             scores += evaluate_each_phase(predictions, answers[phase_id])
